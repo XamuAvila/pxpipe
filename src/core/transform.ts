@@ -153,17 +153,48 @@ export function maxCharsPerImage(cols: number): number {
   return cols * LINES_PER_IMAGE;
 }
 
-/** Returns true iff image-compressing a text block of `textLen` chars would
- *  actually save tokens vs leaving it as text. Used as the gate before every
- *  image-encoding decision in transformRequest.
+/** Returns true iff image-compressing a text block would actually save tokens
+ *  vs leaving it as text. Used as the gate before every image-encoding
+ *  decision in transformRequest.
+ *
+ *  Pass the **actual text string** when possible — the function will
+ *  soft-wrap-count visual rows to match what `renderTextToPngs` will
+ *  actually produce. Newline-heavy content (low fill ratio) renders to
+ *  *more* images than the naive `chars / charsPerImage` estimate, and
+ *  using the looser estimate lets net-losing compressions through.
+ *
+ *  Passing a `number` falls back to the looser chars-only estimate for
+ *  back-compat with existing unit tests; production transform call sites
+ *  should always pass the string.
  *
  *  `cols` defaults to `DEFAULTS.cols` (100) so existing callers and unit
  *  tests that pass only `textLen` keep working byte-identically at the
  *  current atlas. New call sites should pass `o.cols` so a runtime
  *  `--cols` override flows into the break-even math too. */
-export function isCompressionProfitable(textLen: number, cols: number = DEFAULTS.cols): boolean {
-  const charsPerImage = maxCharsPerImage(cols);
-  const estImages = Math.max(1, Math.ceil(textLen / charsPerImage));
+export function isCompressionProfitable(
+  textOrLen: string | number,
+  cols: number = DEFAULTS.cols,
+  imageCountCap?: number,
+): boolean {
+  let estImages: number;
+  let textLen: number;
+  if (typeof textOrLen === 'string') {
+    // Row-aware: matches renderTextToPngs() image budgeting exactly.
+    estImages = estimateImageCount(textOrLen, cols);
+    textLen = textOrLen.length;
+  } else {
+    // Looser chars-only estimate. Assumes lines fill width — wrong for
+    // newline-heavy code/logs but kept for back-compat.
+    const charsPerImage = maxCharsPerImage(cols);
+    estImages = Math.max(1, Math.ceil(textOrLen / charsPerImage));
+    textLen = textOrLen;
+  }
+  // For code paths that truncate before rendering (tool_results), the
+  // actual image cost is bounded by the cap — text savings are still
+  // measured against the full pre-truncation length.
+  if (imageCountCap !== undefined && imageCountCap > 0) {
+    estImages = Math.min(estImages, imageCountCap);
+  }
   const imageTokensCost = estImages * TOKENS_PER_IMAGE;
   const textTokensEquivalent = textLen / CHARS_PER_TOKEN;
   return imageTokensCost < textTokensEquivalent;
@@ -1116,7 +1147,10 @@ export async function transformRequest(
   // usually 25-30 KB so it always passes (1 image @ 2500 tokens < 25000/4 =
   // 6250 text-equivalent tokens), but the check guards against the edge
   // case where a tiny tool docs + tiny static slab combine to <10k chars.
-  if (!isCompressionProfitable(combined.length, o.cols)) {
+  // Pass the full text so the gate uses row-aware image-count math (matches
+  // renderTextToPngs exactly — newline-heavy content renders to more images
+  // than the naive chars/charsPerImage estimate).
+  if (!isCompressionProfitable(combined, o.cols)) {
     info.reason = `not_profitable (slab=${combined.length} chars)`;
     bumpPassthrough(info, 'not_profitable');
     return { body, info };
@@ -1212,13 +1246,13 @@ export async function transformRequest(
             processedExisting.push(blk);
             continue;
           }
-          if (!isCompressionProfitable(textLen, o.cols)) {
+          const reminderText = (blk as TextBlock).text;
+          if (!isCompressionProfitable(reminderText, o.cols)) {
             // Above threshold but image cost ≥ text cost. Net loss to compress.
             bumpPassthrough(info, 'not_profitable');
             processedExisting.push(blk);
             continue;
           }
-          const reminderText = (blk as TextBlock).text;
           const { blocks: imgs, droppedChars, droppedCodepoints: dcp } =
             await textToImageBlocks(reminderText, o.cols);
           for (const img of imgs) {
@@ -1273,7 +1307,7 @@ export async function transformRequest(
               if (inner.length < o.minToolResultChars) {
                 bumpPassthrough(info, 'below_threshold');
                 rewritten.push(blk);
-              } else if (!isCompressionProfitable(inner.length, o.cols)) {
+              } else if (!isCompressionProfitable(inner, o.cols, o.maxImagesPerToolResult)) {
                 bumpPassthrough(info, 'not_profitable');
                 rewritten.push(blk);
               } else {
@@ -1316,7 +1350,7 @@ export async function transformRequest(
                   newInner.push(ib as TextBlock | ImageBlock);
                   continue;
                 }
-                if (!isCompressionProfitable(innerText.length, o.cols)) {
+                if (!isCompressionProfitable(innerText, o.cols, o.maxImagesPerToolResult)) {
                   bumpPassthrough(info, 'not_profitable');
                   newInner.push(ib as TextBlock | ImageBlock);
                   continue;

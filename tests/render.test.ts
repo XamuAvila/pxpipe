@@ -980,7 +980,10 @@ describe('transform', () => {
   });
 
   it('keeps <env> as text outside the image so cache_control stays stable', async () => {
-    const staticSlab = 'claude.md ground truth.\n'.repeat(2200);
+    // Dense slab (long single line) so the row-aware break-even gate
+    // greenlights compression. Same total chars as the old short-line
+    // fixture but profitable: 1 image @ 2500 < 52800/4 = 13200 text.
+    const staticSlab = 'claude.md ground truth. '.repeat(2200);
     const envBlock =
       "<env>\nWorking directory: /tmp/parityproj\nIs directory a git repo: Yes\nPlatform: darwin\nToday's date: 2026-05-18\n</env>";
     const sys = staticSlab + '\n' + envBlock;
@@ -1025,7 +1028,7 @@ describe('transform', () => {
 
   it('puts cache_control on the image only, never on the dynamic tail', async () => {
     const sys =
-      'claude.md\n'.repeat(5000) +
+      'x'.repeat(40000) +
       '<env>\nWorking directory: /tmp/x\n</env>\n' +
       '<context name="todoList">\n[ ] do thing\n</context>';
     const body = new TextEncoder().encode(
@@ -1133,7 +1136,7 @@ describe('transform', () => {
     // The whole token-savings story collapses if the renderer is non-
     // deterministic, because identical system prompts on consecutive turns
     // would produce different image bytes → 0% cache hit. Guard rail.
-    const sys = 'claude.md\n'.repeat(5000);
+    const sys = 'x'.repeat(40000);
     const body = new TextEncoder().encode(
       JSON.stringify({
         model: 'claude',
@@ -1238,7 +1241,7 @@ describe('transform', () => {
       JSON.stringify({
         model: 'claude',
         messages: [{ role: 'user', content: 'hi' }],
-        system: 'claude.md\n'.repeat(5000),
+        system: 'x'.repeat(40000),
       }),
     );
     const { body: outBytes } = await transformRequest(body);
@@ -1268,7 +1271,7 @@ describe('transform', () => {
             ],
           },
         ],
-        system: 'claude.md\n'.repeat(5000),
+        system: 'x'.repeat(40000),
       }),
     );
     const { body: outBytes, info } = await transformRequest(body);
@@ -1303,7 +1306,7 @@ describe('transform', () => {
             content: [{ type: 'text', text: shortReminder }],
           },
         ],
-        system: 'claude.md\n'.repeat(5000),
+        system: 'x'.repeat(40000),
       }),
     );
     const { body: outBytes, info } = await transformRequest(body);
@@ -1335,7 +1338,7 @@ describe('transform', () => {
             ],
           },
         ],
-        system: 'claude.md\n'.repeat(5000),
+        system: 'x'.repeat(40000),
       }),
     );
     const { body: outBytes, info } = await transformRequest(body);
@@ -1370,7 +1373,7 @@ describe('transform', () => {
             ],
           },
         ],
-        system: 'claude.md\n'.repeat(5000),
+        system: 'x'.repeat(40000),
       }),
     );
     const { body: outBytes, info } = await transformRequest(body);
@@ -1532,6 +1535,42 @@ describe('transform', () => {
     // huge net loss. At cols=100 the same block was profitable.
     expect(isCompressionProfitable(10_001, 100)).toBe(true);
     expect(isCompressionProfitable(10_001, 20)).toBe(false);
+  });
+
+  it('isCompressionProfitable(string): row-aware → newline-heavy sparse content (~5500 chars/img) rejected as net-loss', () => {
+    // Regression for the -69% dashboard bug: the number-arg form estimates
+    // by chars/charsPerImage which assumes uniform line-fill. That assumes
+    // 14100 chars/image but renderTextToPngs actually packs ~141 visual
+    // rows/image — newline-heavy code/logs hit row cap WAY before char cap.
+    //
+    // 50000 chars of `x.md\n` is 5000 short lines → 5000 rows / 141 = 36
+    // images. 36 * 2500 = 90000 image tokens vs 50000/4 = 12500 text tokens.
+    // Massive net loss. Number-arg form would incorrectly accept (50000 chars
+    // / 14100 chars-per-img = 4 imgs → 10000 < 12500 → "profitable").
+    const sparse = 'x.md\n'.repeat(10_000);
+    expect(isCompressionProfitable(sparse, 100)).toBe(false);
+    expect(isCompressionProfitable(sparse.length, 100)).toBe(true); // back-compat: looser estimate
+  });
+
+  it('isCompressionProfitable(string): row-aware → dense single-line content packs full-width and profits', () => {
+    // Same 50000 chars but as ONE line wraps to 100-char rows → 500 rows / 141
+    // = 4 images. 4 * 2500 = 10000 image tokens vs 50000/4 = 12500 text →
+    // profitable. Both forms agree on dense content.
+    const dense = 'x'.repeat(50_000);
+    expect(isCompressionProfitable(dense, 100)).toBe(true);
+    expect(isCompressionProfitable(dense.length, 100)).toBe(true);
+  });
+
+  it('isCompressionProfitable(string, cols, cap): truncation cap lets 500KB log become profitable', () => {
+    // For tool_result paging — actual image cost is bounded by maxImagesPerToolResult
+    // while the SAVED text is the full pre-truncation length. Without cap we'd
+    // reject (50k rows = 355 images), with cap=10 we accept (10*2500=25000 vs
+    // 500000/4=125000 text → win by 100k).
+    const lines: string[] = [];
+    for (let i = 0; i < 10_000; i++) lines.push(`log entry ${i} payload`);
+    const log = lines.join('\n');
+    expect(isCompressionProfitable(log, 100)).toBe(false); // 10k rows × 2500 way over
+    expect(isCompressionProfitable(log, 100, 10)).toBe(true); // capped, profits
   });
 
   it('isCompressionProfitable: smaller-cell atlas (Cozette-shape) would let 16k blocks become 1-image wins (cols proxy)', () => {
