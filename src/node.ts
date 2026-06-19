@@ -614,11 +614,32 @@ async function main(): Promise<void> {
     console.log(`[pxpipe] dashboard → http://127.0.0.1:${opts.port}/`);
   });
 
+  // server.close() only stops accepting new connections and waits for open
+  // ones to drain — it does NOT end idle keep-alive sockets. The dashboard tab
+  // (htmx polls every 2s) and the Claude Code client both hold keep-alive
+  // sockets open, so a naive close() never fires its callback and the first
+  // Ctrl+C appears to hang. We drop idle sockets immediately, force-close any
+  // in-flight ones after a short grace period, and let a second signal exit now.
+  let shuttingDown = false;
   const shutdown = (sig: string) => {
+    if (shuttingDown) {
+      console.log(`[pxpipe] ${sig} again — forcing exit`);
+      process.exit(130);
+    }
+    shuttingDown = true;
     console.log(`[pxpipe] ${sig} — shutting down`);
     // Flush+close the tracker so we don't drop the last few events on exit.
     if (tracker instanceof FileTracker) tracker.close();
     server.close(() => process.exit(0));
+    // Drop idle keep-alive sockets so close()'s callback can actually fire.
+    server.closeIdleConnections?.();
+    // Hard deadline: if a streaming /v1/messages response (or slow upstream)
+    // is still in flight, force the rest closed and exit anyway.
+    const deadline = setTimeout(() => {
+      server.closeAllConnections?.();
+      process.exit(0);
+    }, 1500);
+    deadline.unref();
   };
   process.on('SIGINT', () => shutdown('SIGINT'));
   process.on('SIGTERM', () => shutdown('SIGTERM'));
