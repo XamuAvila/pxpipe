@@ -172,6 +172,29 @@ PXPIPE_CAVEMAN=1 bash bench/run.sh --model 'claude-opus-4-6[1m]' --label caveman
 node bench/score.mjs bench/runs/<off-dir> bench/runs/<caveman-dir>
 ```
 
+### Does it hurt recall?
+
+A recall A/B (`eval/caveman-slab/`, pre-registered) put seeded facts into an
+imaged system-prompt slab and compared **plain image vs caveman image** at
+production density, fable-5, N=50 answerable + 10 unanswerable per arm:
+
+| arm | answerable correct | confabulated (never-stated facts) |
+|---|---:|---:|
+| plain image | 31/50 (62%) | 3/10 |
+| caveman image | 32/50 (64%) | 0/10 |
+
+Tied within noise across every fact type (decision, numeric, path, name,
+negation); caveman confabulated *less*. **caveman does not measurably hurt
+recall vs plain imaging** — and the caveman-rendered slabs cost **−6.9% image
+tokens** (10,751 → 10,004 across the 10 slabs), so the saving is free of recall
+cost. Two caveats keep this from being a default-on green light: both arms hit a
+~63% **floor** (the single dense page is hard to read — plain fails the same
+way, so the floor is the render, not caveman), and the eval deliberately omits
+the production "fact sheet" that keeps exact identifiers as text
+(`transform.ts:1627`), so the numeric/path misses it counts would not occur in
+production. Full design, results, and follow-ups:
+[`eval/caveman-slab/DESIGN.md`](eval/caveman-slab/DESIGN.md).
+
 ## How it works
 
 ```

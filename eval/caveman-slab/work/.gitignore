@@ -1,0 +1,3 @@
+# Rendered PNGs are regenerable via build.mjs; do not track (matches eval/gist-recall).
+*.png
+run.log

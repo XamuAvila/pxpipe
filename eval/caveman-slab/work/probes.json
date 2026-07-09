@@ -1,0 +1,362 @@
+[
+ {
+  "slab": 0,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "mobx"
+ },
+ {
+  "slab": 0,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "9160"
+ },
+ {
+  "slab": 0,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/scheduler/io.ts"
+ },
+ {
+  "slab": 0,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Lucia Alvarez"
+ },
+ {
+  "slab": 0,
+  "type": "negation",
+  "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 0,
+  "type": "unanswerable",
+  "q": "Which database migration version was rolled back?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 1,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "xstate"
+ },
+ {
+  "slab": 1,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "3470"
+ },
+ {
+  "slab": 1,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/quota/sync.ts"
+ },
+ {
+  "slab": 1,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Ingrid Lindqvist"
+ },
+ {
+  "slab": 1,
+  "type": "negation",
+  "q": "Is ASYNC_FSYNC enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 1,
+  "type": "unanswerable",
+  "q": "Which database migration version was rolled back?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 2,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "jotai"
+ },
+ {
+  "slab": 2,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "3400"
+ },
+ {
+  "slab": 2,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/flusher/io.ts"
+ },
+ {
+  "slab": 2,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Nadia Berg"
+ },
+ {
+  "slab": 2,
+  "type": "negation",
+  "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 2,
+  "type": "unanswerable",
+  "q": "Which database migration version was rolled back?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 3,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "immer"
+ },
+ {
+  "slab": 3,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "4520"
+ },
+ {
+  "slab": 3,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/quota/io.ts"
+ },
+ {
+  "slab": 3,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Mara Petrov"
+ },
+ {
+  "slab": 3,
+  "type": "negation",
+  "q": "Is STRICT_CAS enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 3,
+  "type": "unanswerable",
+  "q": "Which database migration version was rolled back?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 4,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "valtio"
+ },
+ {
+  "slab": 4,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "3460"
+ },
+ {
+  "slab": 4,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/flusher/sync.ts"
+ },
+ {
+  "slab": 4,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Dmitri Lindqvist"
+ },
+ {
+  "slab": 4,
+  "type": "negation",
+  "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 4,
+  "type": "unanswerable",
+  "q": "What git tag was the hotfix released under?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 5,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "mobx"
+ },
+ {
+  "slab": 5,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "6270"
+ },
+ {
+  "slab": 5,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/batcher/core.ts"
+ },
+ {
+  "slab": 5,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Soren Costa"
+ },
+ {
+  "slab": 5,
+  "type": "negation",
+  "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 5,
+  "type": "unanswerable",
+  "q": "What git tag was the hotfix released under?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 6,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "jotai"
+ },
+ {
+  "slab": 6,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "2780"
+ },
+ {
+  "slab": 6,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/retry/io.ts"
+ },
+ {
+  "slab": 6,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Dmitri Alvarez"
+ },
+ {
+  "slab": 6,
+  "type": "negation",
+  "q": "Is LEGACY_PINS enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 6,
+  "type": "unanswerable",
+  "q": "What git tag was the hotfix released under?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 7,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "redux"
+ },
+ {
+  "slab": 7,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "2770"
+ },
+ {
+  "slab": 7,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/retry/core.ts"
+ },
+ {
+  "slab": 7,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Ingrid Lindqvist"
+ },
+ {
+  "slab": 7,
+  "type": "negation",
+  "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 7,
+  "type": "unanswerable",
+  "q": "Which AWS region was the failover assigned to?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 8,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "mobx"
+ },
+ {
+  "slab": 8,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "4590"
+ },
+ {
+  "slab": 8,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/flusher/sync.ts"
+ },
+ {
+  "slab": 8,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Ingrid Costa"
+ },
+ {
+  "slab": 8,
+  "type": "negation",
+  "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 8,
+  "type": "unanswerable",
+  "q": "Which AWS region was the failover assigned to?",
+  "gold": "UNKNOWN"
+ },
+ {
+  "slab": 9,
+  "type": "decision",
+  "q": "Which package has the project standardized on for the store layer?",
+  "gold": "redux"
+ },
+ {
+  "slab": 9,
+  "type": "numeric",
+  "q": "What is the default gateway retry budget in milliseconds?",
+  "gold": "3400"
+ },
+ {
+  "slab": 9,
+  "type": "path",
+  "q": "From which file path is session configuration read?",
+  "gold": "src/scheduler/core.ts"
+ },
+ {
+  "slab": 9,
+  "type": "name",
+  "q": "Who must blocked deploys be escalated to?",
+  "gold": "Ingrid Khoury"
+ },
+ {
+  "slab": 9,
+  "type": "negation",
+  "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.",
+  "gold": "OFF"
+ },
+ {
+  "slab": 9,
+  "type": "unanswerable",
+  "q": "What was the Docker base image pinned to?",
+  "gold": "UNKNOWN"
+ }
+]

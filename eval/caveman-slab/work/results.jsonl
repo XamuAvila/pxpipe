@@ -1,0 +1,120 @@
+{"arm": "plain", "slab": 0, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "mobx"}
+{"arm": "plain", "slab": 0, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "9160", "answer": "9160"}
+{"arm": "plain", "slab": 0, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/scheduler/io.ts", "answer": "/etc/scheduler/io.tz"}
+{"arm": "plain", "slab": 0, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Lucia Alvarez", "answer": "Lucia Alvarez"}
+{"arm": "plain", "slab": 0, "type": "negation", "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 0, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 1, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "xstate", "answer": "xstate"}
+{"arm": "plain", "slab": 1, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3470", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 1, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/quota/sync.ts", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 1, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Lindqvist", "answer": "Ingrid Lindqvist"}
+{"arm": "plain", "slab": 1, "type": "negation", "q": "Is ASYNC_FSYNC enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 1, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 2, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "jotai", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 2, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3400", "answer": "9000"}
+{"arm": "plain", "slab": 2, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/io.ts", "answer": "src/flusher/io.ts"}
+{"arm": "plain", "slab": 2, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Nadia Berg", "answer": "Nadia Berg"}
+{"arm": "plain", "slab": 2, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 2, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 3, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "immer", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 3, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "4520", "answer": "4520"}
+{"arm": "plain", "slab": 3, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/quota/io.ts", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 3, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Mara Petrov", "answer": "Mara Petrov"}
+{"arm": "plain", "slab": 3, "type": "negation", "q": "Is STRICT_CAS enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 3, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "The instructions do not mention any database migration or rollback.\n\nUNKNOWN"}
+{"arm": "plain", "slab": 4, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "valtio", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 4, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3460", "answer": "9460"}
+{"arm": "plain", "slab": 4, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/sync.ts", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 4, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Dmitri Lindqvist", "answer": "Dmitri Lindqvist"}
+{"arm": "plain", "slab": 4, "type": "negation", "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 4, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 5, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 5, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "6270", "answer": "The default gateway retry budget is stated as \"exactly 6270 milliseconds.\"\n\n6270"}
+{"arm": "plain", "slab": 5, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/batcher/core.ts", "answer": "src/batcher/core.ts"}
+{"arm": "plain", "slab": 5, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Soren Costa", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 5, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 5, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 6, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "jotai", "answer": "jotai"}
+{"arm": "plain", "slab": 6, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "2780", "answer": "2780"}
+{"arm": "plain", "slab": 6, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/retry/io.ts", "answer": "The instructions do not contain any file path for session configuration \u2014 the text is repetitive policy prose about backing claims with evidence, with no session-config path stated.\n\nUNKNOWN"}
+{"arm": "plain", "slab": 6, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Dmitri Alvarez", "answer": "Dmitri Alvarez"}
+{"arm": "plain", "slab": 6, "type": "negation", "q": "Is LEGACY_PINS enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 6, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "The operating instructions contain several policy statements (session config source, retry budget, LEGACY_PINS, on-call owner, etc.) but none of them mention a hotfix or any git tag it was released under.\n\nUNKNOWN"}
+{"arm": "plain", "slab": 7, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "redux", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 7, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "2770", "answer": "3779"}
+{"arm": "plain", "slab": 7, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/retry/core.ts", "answer": "The Tool Reference Policy states session configuration is read exclusively from `src/retru/core.ts`.\n\nsrc/retru/core.ts"}
+{"arm": "plain", "slab": 7, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Lindqvist", "answer": "Ingrid Lindqvist"}
+{"arm": "plain", "slab": 7, "type": "negation", "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 7, "type": "unanswerable", "q": "Which AWS region was the failover assigned to?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 8, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "Confirmed. The line reads: \"Policy: for the store layer this project has standardized on mobx, and zustand is explicitly banned; the assistant must not introduce zustand anywhere.\"\n\nmobx"}
+{"arm": "plain", "slab": 8, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "4590", "answer": "4590"}
+{"arm": "plain", "slab": 8, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/sync.ts", "answer": "I found it. The instructions state: \"Policy: session configuration is read exclusively from src/flusher/sync.ts\".\n\nsrc/flusher/sync.ts"}
+{"arm": "plain", "slab": 8, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Costa", "answer": "UNKNOWN"}
+{"arm": "plain", "slab": 8, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 8, "type": "unanswerable", "q": "Which AWS region was the failover assigned to?", "gold": "UNKNOWN", "answer": "I read all the operating instructions across the full image. The policies mention retry budgets, HOT_RELOAD, session config paths, coverage held at 31%, and escalation to Ingrid Costa \u2014 but there is no mention of any failover or AWS region.\n\nUNKNOWN"}
+{"arm": "plain", "slab": 9, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "redux", "answer": "The store layer section states the project standardized on redux and that valtio is banned.\n\nRedux"}
+{"arm": "plain", "slab": 9, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3400", "answer": "9400"}
+{"arm": "plain", "slab": 9, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/scheduler/core.ts", "answer": "src/scheduler/core.ts"}
+{"arm": "plain", "slab": 9, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Khoury", "answer": "The operating instructions cover proxy behavior, code-review policy, destructive-operation hooks, a gateway retry budget, session config location, and a redux/valtio ban \u2014 but contain no statement about deploys or escalation.\n\nUNKNOWN"}
+{"arm": "plain", "slab": 9, "type": "negation", "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "plain", "slab": 9, "type": "unanswerable", "q": "What was the Docker base image pinned to?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 0, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 0, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "9160", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 0, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/scheduler/io.ts", "answer": "I found the relevant line: \"Policy: session configuration is read exclusively from src/scheduler/io.ts; assistant must not read configuration from any other location.\"\n\nsrc/scheduler/io.ts"}
+{"arm": "caveman", "slab": 0, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Lucia Alvarez", "answer": "Lucia Alvarez"}
+{"arm": "caveman", "slab": 0, "type": "negation", "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 0, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 1, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "xstate", "answer": "xstate"}
+{"arm": "caveman", "slab": 1, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3470", "answer": "3470"}
+{"arm": "caveman", "slab": 1, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/quota/sync.ts", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 1, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Lindqvist", "answer": "Ingrid Lundqvist"}
+{"arm": "caveman", "slab": 1, "type": "negation", "q": "Is ASYNC_FSYNC enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 1, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 2, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "jotai", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 2, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3400", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 2, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/io.ts", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 2, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Nadia Berg", "answer": "Nadia Berg"}
+{"arm": "caveman", "slab": 2, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 2, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 3, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "immer", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 3, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "4520", "answer": "4520"}
+{"arm": "caveman", "slab": 3, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/quota/io.ts", "answer": "src/quota/io.ts"}
+{"arm": "caveman", "slab": 3, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Mara Petrov", "answer": "Mara Petrov"}
+{"arm": "caveman", "slab": 3, "type": "negation", "q": "Is STRICT_CAS enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 3, "type": "unanswerable", "q": "Which database migration version was rolled back?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 4, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "valtio", "answer": "The project has standardized on **valtio** for the store layer.\n\n`valtio`"}
+{"arm": "caveman", "slab": 4, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3460", "answer": "3460"}
+{"arm": "caveman", "slab": 4, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/sync.ts", "answer": "The instructions state: \"session configuration is read exclusively from src/flusher/sync.ts\".\n\nsrc/flusher/sync.ts"}
+{"arm": "caveman", "slab": 4, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Dmitri Lindqvist", "answer": "Dmitri Lindqvist"}
+{"arm": "caveman", "slab": 4, "type": "negation", "q": "Is USE_BROTLI enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 4, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 5, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 5, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "6270", "answer": "6270"}
+{"arm": "caveman", "slab": 5, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/batcher/core.ts", "answer": "src/batcher/core.ts"}
+{"arm": "caveman", "slab": 5, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Soren Costa", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 5, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 5, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 6, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "jotai", "answer": "jotai"}
+{"arm": "caveman", "slab": 6, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "2780", "answer": "2900"}
+{"arm": "caveman", "slab": 6, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/retry/io.ts", "answer": "/etc/retry/o.ts"}
+{"arm": "caveman", "slab": 6, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Dmitri Alvarez", "answer": "Dmitri Alvarez"}
+{"arm": "caveman", "slab": 6, "type": "negation", "q": "Is LEGACY_PINS enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 6, "type": "unanswerable", "q": "What git tag was the hotfix released under?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 7, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "redux", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 7, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "2770", "answer": "2270"}
+{"arm": "caveman", "slab": 7, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/retry/core.ts", "answer": "src/retry/core.ts"}
+{"arm": "caveman", "slab": 7, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Lindqvist", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 7, "type": "negation", "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 7, "type": "unanswerable", "q": "Which AWS region was the failover assigned to?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 8, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "mobx", "answer": "I can now read it clearly: \"Policy: for store layer this project has standardized on mobx, and zustand is explicitly banned; assistant must not introduce zustand anywhere.\"\n\nmobx"}
+{"arm": "caveman", "slab": 8, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "4590", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 8, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/flusher/sync.ts", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 8, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Costa", "answer": "Ingrid Costa"}
+{"arm": "caveman", "slab": 8, "type": "negation", "q": "Is HOT_RELOAD enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "OFF"}
+{"arm": "caveman", "slab": 8, "type": "unanswerable", "q": "Which AWS region was the failover assigned to?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
+{"arm": "caveman", "slab": 9, "type": "decision", "q": "Which package has the project standardized on for the store layer?", "gold": "redux", "answer": "The project has standardized on **redux** for the store layer."}
+{"arm": "caveman", "slab": 9, "type": "numeric", "q": "What is the default gateway retry budget in milliseconds?", "gold": "3400", "answer": "3400"}
+{"arm": "caveman", "slab": 9, "type": "path", "q": "From which file path is session configuration read?", "gold": "src/scheduler/core.ts", "answer": "src/scheduler/core.ts"}
+{"arm": "caveman", "slab": 9, "type": "name", "q": "Who must blocked deploys be escalated to?", "gold": "Ingrid Khoury", "answer": "Ingrid Khoury"}
+{"arm": "caveman", "slab": 9, "type": "negation", "q": "Is ENABLE_SHARDING enabled in production? Answer ENABLED or OFF.", "gold": "OFF", "answer": "The instructions state ENABLE_SHARDING is disabled in production.\n\nOFF"}
+{"arm": "caveman", "slab": 9, "type": "unanswerable", "q": "What was the Docker base image pinned to?", "gold": "UNKNOWN", "answer": "UNKNOWN"}
