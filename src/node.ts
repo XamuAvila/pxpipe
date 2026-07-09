@@ -167,6 +167,10 @@ Environment:
   PXPIPE_LOG              JSONL events path (default ~/.pxpipe/events.jsonl)
   PXPIPE_DUMP_DIR         debug: write every rendered PNG here (what the model
                           sees); off unless set. Compress arm only.
+  PXPIPE_CAVEMAN          experiment: deterministic prose compression (drop
+                          EN/PT articles/fillers) on image-bound text before
+                          rendering; off unless set. Flipping it busts warm
+                          image caches — keep per-arm in A/B runs.
 
 Use with Claude Code:
   ANTHROPIC_BASE_URL=http://127.0.0.1:47821 claude
@@ -876,6 +880,13 @@ async function main(): Promise<void> {
   if (forcePassthrough) {
     console.log('[pxpipe] PXPIPE_DISABLE set — passthrough mode (compress=false), still logging usage + baselines');
   }
+  // Caveman experiment (see TransformOptions.caveman): opt-in, process-wide.
+  // Deliberately env-only — no dashboard toggle — because flipping it changes
+  // image bytes (= prompt-cache key) and would bust warm caches mid-session.
+  const cavemanOn = /^(1|true|yes|on)$/i.test(process.env.PXPIPE_CAVEMAN ?? '');
+  if (cavemanOn) {
+    console.log('[pxpipe] PXPIPE_CAVEMAN set — caveman prose compression ON (experiment)');
+  }
   // Debug aid: when PXPIPE_DUMP_DIR is set, persist every rendered PNG this
   // process emits, so you can eyeball exactly what the model received (OCR /
   // legibility audits, demo inspection). Best-effort — never affects requests.
@@ -945,7 +956,9 @@ async function main(): Promise<void> {
       // (The dashboard kill switch does the same thing at runtime.)
       if (forcePassthrough || !dashboard.getCompressionEnabled()) return { compress: false };
       // Active path: use DEFAULTS in transform.ts for break-even gating.
-      return {};
+      // PXPIPE_CAVEMAN is the one env override — an opt-in experiment flag,
+      // not a tuning knob (constant for the process, so cache-safe).
+      return cavemanOn ? { caveman: true } : {};
     },
     onRequest: async (e) => {
       // Feed the dashboard BEFORE tracker.emit — toTrackEvent strips

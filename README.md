@@ -103,6 +103,75 @@ SWE-bench run totals, receipts, and caveats:
 data — memorized answers survive misreads — so we lead with the novel-number
 evals.)
 
+## Caveman prose compression (experimental, opt-in)
+
+`caveman` is a second, optional compression layer that runs *before* prose is
+rendered to an image: it deterministically drops low-information tokens (EN/PT
+articles and fillers — "the", "a", "just", "really", …). Fewer chars → fewer
+pixels → a smaller image cache write. It only touches blocks classified as
+prose (`classifyContent === 'other'`); code, JSON, logs, and diffs are never
+compressed, so it composes with the profitability gate rather than replacing
+it.
+
+It is **off by default and stays off** until a gist/verbatim recall A/B shows
+the model still reads compressed prose as faithfully as full prose. This is a
+*semantic* lossy layer stacked on the *optical* lossiness of imaging — the cost
+bench below shows it is cheaper and cache-stable, **not** that recall holds.
+
+### Configure
+
+| Surface | Flag | Values |
+|---|---|---|
+| Node proxy | `PXPIPE_CAVEMAN` | `1` / `true` / `yes` / `on` (case-insensitive); unset = off |
+| Cloudflare Worker | `CAVEMAN` | truthy string; unset = off |
+| Library | `transformAnthropicMessages({ …, caveman: true })` | boolean, default `false` |
+
+```bash
+PXPIPE_CAVEMAN=1 npx pxpipe-proxy      # prose compression ON (experiment)
+```
+
+⚠️ Flipping the flag changes the rendered image bytes, which **busts warm image
+caches**. In an A/B run hold it fixed per arm — never toggle mid-session.
+
+### One reproducible A/B run
+
+Single 4-turn headless session per arm (`bench/run.sh`) on
+`claude-opus-4-6[1m]`, scored by `bench/score.mjs`
+(`cost_units = input + 1.25·cache_create + 0.1·cache_read`):
+
+| metric | OFF | ON (caveman) | Δ |
+|---|---:|---:|---:|
+| cost_units | 192,921 | 160,834 | **−16.6%** |
+| cache_create tokens | 122,797 | 94,705 | **−22.9%** |
+| cache_read tokens | 388,741 | 419,022 | +7.8% |
+| output tokens | 1,768 | 1,870 | +5.8% |
+| prefix_flips | 0 | 0 | 0 |
+| cold_restarts | 1 | 0 | — |
+| p50 latency | 7,107 ms | 3,395 ms | −52% |
+
+Read it honestly — **N=1 per arm, one session**, so this is a smoke bench, not
+a powered eval:
+
+- The mechanistic win is **cache_create −22.9%**: compressed prose is fewer
+  chars → fewer pixels → smaller image cache writes (cache_create carries the
+  heaviest 1.25× weight, so it drives most of the cost delta).
+- The headline **cost_units −16.6%** is partly inflated by one cold cache miss
+  on the OFF arm (44,211 cache_create tokens written with no read benefit) —
+  plausibly cache-timing noise, not something caveman caused. Don't over-read
+  it.
+- The robust, noise-free results: **prefix_flips = 0 on both arms** (caveman is
+  deterministic — it does not bust the cache prefix) and **output tokens flat**
+  (the model answered normally on compressed prose on this task).
+- Latency tracks image size but is also sensitive to the cold restart.
+
+Reproduce:
+
+```bash
+bash bench/run.sh --model 'claude-opus-4-6[1m]' --label off
+PXPIPE_CAVEMAN=1 bash bench/run.sh --model 'claude-opus-4-6[1m]' --label caveman
+node bench/score.mjs bench/runs/<off-dir> bench/runs/<caveman-dir>
+```
+
 ## How it works
 
 ```

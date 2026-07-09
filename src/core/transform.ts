@@ -35,6 +35,7 @@ import {
   renderTextToPngsWithCharLimit,
 } from './render.js';
 import { factSheetText } from './factsheet.js';
+import { cavemanize } from './caveman.js';
 import { stripSchemaDescriptions, schemaHasStructure } from './schema-strip.js';
 import { bytesToBase64 } from './png.js';
 import { collapseHistory, HISTORY_SYNTHETIC_INTRO } from './history.js';
@@ -121,6 +122,16 @@ export interface TransformOptions {
    *  for every block rendered to images. Off by default (entries inflate `info`;
    *  only a stateful harness can use them). */
   emitRecoverable?: boolean;
+  /** EXPERIMENT (`PXPIPE_CAVEMAN=1`): deterministic rule-based prose compression
+   *  (drop EN/PT articles + filler adverbs, rewrite politeness phrases) on
+   *  image-bound text BEFORE compaction/reflow — fewer chars → fewer pixels →
+   *  fewer image tokens. Applies to the static slab and reminder blocks when
+   *  they classify as prose ('other'); tool_results are out of scope for v1
+   *  (mostly logs/code — the classify gate would skip them anyway). Never
+   *  touches code, table rows, quoted spans, or non-alphabetic tokens
+   *  (src/core/caveman.ts). Off by default until the A/B shows gist/verbatim
+   *  recall holds — see FINDINGS.md on redundancy as the channel's ECC. */
+  caveman?: boolean;
 }
 
 const DEFAULTS: Required<TransformOptions> = {
@@ -146,6 +157,9 @@ const DEFAULTS: Required<TransformOptions> = {
   reflow: true,
   keepSharp: () => false,
   emitRecoverable: false,
+  // Experiment; changes image bytes (= prompt-cache key), so flipping it
+  // mid-session busts the warm image cache. Keep off outside the harness.
+  caveman: false,
   // GPT-only knobs; the Anthropic transform ignores them but Required<> needs them.
   collapseHistory: true,
   gptHistory: {},
@@ -496,6 +510,11 @@ export interface TransformInfo {
   /** Total source chars image-encoded this request (static slab + reminders + tool_results).
    *  Unlike `origChars` (static slab + tool docs only), reflects what `imageCount` replaced. */
   compressedChars: number;
+  /** Chars removed by the opt-in caveman prose pass (`TransformOptions.caveman`).
+   *  Reported as a separate delta; `origChars`/`compressedChars` stay anchored
+   *  to the RAW source lengths so savings baselines remain comparable across
+   *  caveman on/off runs. */
+  cavemanChars?: number;
   imageCount: number;
   imageBytes: number;
   /** Σ width×height across all rendered images. Pairs with upstream token count for
@@ -1602,9 +1621,19 @@ export async function transformRequest(
   const combinedRaw = [staticText, toolReferenceText]
     .filter((s) => s.length > 0)
     .join('\n\n');
+  // Caveman (opt-in experiment): deterministic prose-word dropping before
+  // compaction, so gate/renderer/paging all price the shortened text. Gated
+  // on prose shape — over structured/log content it would be a no-op scan.
+  // The fact sheet below is built from `combinedRaw`, so exact identifiers
+  // survive as text regardless of what the pass drops.
+  const combinedSrc =
+    o.caveman && classifyContent(combinedRaw) === 'other' ? cavemanize(combinedRaw) : combinedRaw;
+  if (combinedSrc.length !== combinedRaw.length) {
+    info.cavemanChars = (info.cavemanChars ?? 0) + (combinedRaw.length - combinedSrc.length);
+  }
   // Compact then reflow before the gate; gate/renderer/paging all see the same text.
   // origChars anchored to raw length — that's what Anthropic would have billed.
-  const combined = maybeReflow(compactSlabWhitespace(combinedRaw), o.reflow);
+  const combined = maybeReflow(compactSlabWhitespace(combinedSrc), o.reflow);
   info.origChars = combinedRaw.length;
   info.compressedChars = 0;
   if (combined) info.systemSha8 = await sha8(combined);
@@ -1805,7 +1834,18 @@ export async function transformRequest(
           // runs reduce real renderer cost without changing what the
           // model reads.
           const reminderRaw = (blk as TextBlock).text;
-          const reminderText = maybeReflow(compactSlabWhitespace(reminderRaw), o.reflow);
+          // Caveman (opt-in): same placement as the slab path — before
+          // compaction so profitability prices the shortened text. Fact sheet
+          // and recoverable entry below keep using `reminderRaw`.
+          const reminderSrc =
+            o.caveman && classifyContent(reminderRaw) === 'other'
+              ? cavemanize(reminderRaw)
+              : reminderRaw;
+          if (reminderSrc.length !== reminderRaw.length) {
+            info.cavemanChars =
+              (info.cavemanChars ?? 0) + (reminderRaw.length - reminderSrc.length);
+          }
+          const reminderText = maybeReflow(compactSlabWhitespace(reminderSrc), o.reflow);
           if (!isCompressionProfitable(reminderText, denseGeo.cols, undefined, numCols, o.charsPerToken, 0, 0, true, denseGeo.maxChars)) {
             bumpPassthrough(info, 'not_profitable');
             processedExisting.push(blk);
