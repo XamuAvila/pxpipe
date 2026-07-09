@@ -35,6 +35,11 @@ export interface Env {
   /** R2 multi-column packing — default 1 (off). 2 squeezes ~2× source rows
    *  per image; OCR-verify before flipping in production. */
   MULTI_COL?: string;
+  /** Experiment, default off: deterministic prose compression (drop EN/PT
+   *  articles/fillers) on image-bound text before rendering. Flipping it
+   *  changes image bytes (= prompt-cache key); keep constant per deployment.
+   *  See TransformOptions.caveman / src/core/caveman.ts. */
+  CAVEMAN?: string;
   /** When "0" / "false", disable per-request event JSON logs. Default-on.
    *  Cloudflare ingests console.log as Workers Logs; pipe via Logpush to
    *  R2/S3 for the same JSONL shape Node writes to disk. */
@@ -112,6 +117,7 @@ export default {
       // R2 multi-column ON (2 cols) — single-col drops below break-even on
       // real tool-doc slabs. Override via MULTI_COL=1 if OCR misreads layout.
       multiCol: env.MULTI_COL ? Math.max(1, Number(env.MULTI_COL) | 0) : 2,
+      caveman: truthy(env.CAVEMAN, false),
     };
     const trackingOn = truthy(env.PXPIPE_TRACK, true);
     // Workers Logs ingests stdout as separate log lines. Emit one JSON line
