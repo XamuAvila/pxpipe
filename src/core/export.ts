@@ -15,7 +15,7 @@ import {
   CELL_W,
 } from './render.js';
 // Dogfood the public SDK: render via the same `./transform` entry external
-// consumers import (pxpipe-proxy/transform → renderTextToImages), not the
+// consumers import (@xamukavila/pxpipe/transform → renderTextToImages), not the
 // internal leaf renderer.
 import { renderTextToImages } from './library.js';
 import { estimateImageCount, ANTHROPIC_PIXELS_PER_TOKEN, IMAGE_COST_SAFETY_MARGIN, REPORT_CHARS_PER_TOKEN } from './transform.js';
@@ -428,7 +428,7 @@ export async function runExportCore(
   // Render to PNG pages via the public SDK primitive. shrink=true sizes the canvas
   // to the widest line so short-line code isn't padded to full width; multiCol='auto'
   // packs as many columns side-by-side as fit. Same render surface shipped to external
-  // SDK consumers (pxpipe-proxy/transform).
+  // SDK consumers (@xamukavila/pxpipe/transform).
   const { pages: images } = await renderTextToImages(sourceText, {
     cols: opts.cols,
     shrink: true,

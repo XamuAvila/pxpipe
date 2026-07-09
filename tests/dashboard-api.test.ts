@@ -204,6 +204,28 @@ describe('serveFragment', () => {
     }
   });
 
+  it('renders and mutates Claude Opus 4.6 chip via the single model scope', async () => {
+    const prev = process.env.PXPIPE_MODELS;
+    try {
+      delete process.env.PXPIPE_MODELS;
+      setAllowedModelBases(null); // reset to built-in default (Fable 5 + GPT 5.6)
+      const off = await (await dash.serveFragment('models', url, 1234)).text();
+      // Opus 4.6 is opt-in, so it appears but is not lit by default.
+      expect(off).toContain('Opus 4.6</button>');
+      expect(off).not.toContain('Opus 4.6 ✓');
+      expect(getAllowedModelBases()).not.toContain('claude-opus-4-6');
+
+      dash.handleModelsToggle('claude-opus-4-6', true);
+      const on = await (await dash.serveFragment('models', url, 1234)).text();
+      expect(on).toContain('Opus 4.6 ✓');
+      expect(getAllowedModelBases()).toContain('claude-opus-4-6');
+    } finally {
+      setAllowedModelBases(null);
+      if (prev === undefined) delete process.env.PXPIPE_MODELS;
+      else process.env.PXPIPE_MODELS = prev;
+    }
+  });
+
   it('renders header + recent + stats fragments from the same payloads as JSON', async () => {
     writeEvents(tmp, [
       ev({ status: 200, model: 'gpt-5.5', compressed: true, orig_chars: 1000, image_bytes: 200 }),

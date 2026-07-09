@@ -16,7 +16,7 @@ measured per-request against a free `count_tokens` counterfactual in
 
 This is what the model sees instead of text:
 
-![example: a real `transformRequest` output: system prompt + tool docs reflowed into one dense 1573×1248 page, instruction banner on top, ↵ marking original newlines](https://raw.githubusercontent.com/teamchong/pxpipe/main/docs/assets/example-render.png)
+![example: a real `transformRequest` output: system prompt + tool docs reflowed into one dense 1573×1248 page, instruction banner on top, ↵ marking original newlines](https://raw.githubusercontent.com/XamuAvila/pxpipe/main/docs/assets/example-render.png)
 
 *~48k chars of system prompt + tool docs: ≈25k tokens as text, ≈2.7k image
 tokens as this page. Real pipeline output; the model reads renders like this
@@ -45,7 +45,7 @@ rate is why Opus is opt-in.
 ## Try it (30 seconds)
 
 ```bash
-npx pxpipe-proxy                                  # proxy on 127.0.0.1:47821
+npx @xamukavila/pxpipe                            # proxy on 127.0.0.1:47821
 ANTHROPIC_BASE_URL=http://127.0.0.1:47821 claude  # point Claude Code at it
 ```
 
@@ -74,8 +74,8 @@ are imaged.
   loses money on sparse prose (~3.5 chars/token); a profitability gate
   (calibrated on N=391 production rows) images only where the math wins.
 - **Model scope:** default `PXPIPE_MODELS=claude-fable-5,gpt-5.6`. Opus
-  4.7/4.8 misread ~7% of renders and GPT 5.5 degrades on imaged context, so
-  both are opt-in via `PXPIPE_MODELS` or the dashboard chips.
+  4.6/4.7/4.8 misread ~7% of renders and GPT 5.5 degrades on imaged context, so
+  all are opt-in via `PXPIPE_MODELS` or the dashboard chips.
   `PXPIPE_MODELS=off` disables imaging. Everything else passes through
   byte-identical. On the GPT path, tool definitions stay native JSON and no
   Anthropic `cache_control` markers are used.
@@ -127,7 +127,7 @@ bench below shows it is cheaper and cache-stable, **not** that recall holds.
 | Library | `transformAnthropicMessages({ …, caveman: true })` | boolean, default `false` |
 
 ```bash
-PXPIPE_CAVEMAN=1 npx pxpipe-proxy      # prose compression ON (experiment)
+PXPIPE_CAVEMAN=1 npx @xamukavila/pxpipe  # prose compression ON (experiment)
 ```
 
 ⚠️ Flipping the flag changes the rendered image bytes, which **busts warm image
@@ -211,7 +211,7 @@ sparse prose stays text. Events log to `~/.pxpipe/events.jsonl`.
 ## Library use (no proxy)
 
 ```ts
-import { renderTextToImages, transformAnthropicMessages } from "pxpipe-proxy";
+import { renderTextToImages, transformAnthropicMessages } from "@xamukavila/pxpipe";
 
 const { pages } = await renderTextToImages(toolResultText);     // pages[i].png: Uint8Array
 const { body, applied, info } = await transformAnthropicMessages({
@@ -268,10 +268,10 @@ Three kinds of *input* blocks, each behind a profitability gate:
 Everything else passes through byte-identical: your messages, recent turns,
 the model's output (it is the response, the proxy never touches it), sparse
 prose, and anything too small to win. Models outside the allowlist pass
-through entirely — the default scope is Fable 5 and GPT 5.6 only. Opus 4.8
-and GPT 5.5 read imaged content measurably worse (FINDINGS.md 2026-06-16),
-so they are deliberately opt-in via the dashboard or `PXPIPE_MODELS`, never
-silently imaged.
+through entirely — the default scope is Fable 5 and GPT 5.6 only. Opus
+4.6/4.7/4.8 and GPT 5.5 read imaged content measurably worse (FINDINGS.md
+2026-06-16), so they are deliberately opt-in via the dashboard or
+`PXPIPE_MODELS`, never silently imaged.
 
 **Has it ever failed for real, outside the benchmarks?**
 Yes, once in weeks of daily use: the model recalled a person's name from

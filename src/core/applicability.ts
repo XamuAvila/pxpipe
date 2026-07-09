@@ -25,11 +25,11 @@ function baseModelId(model: string): string {
 let runtimeModelBases: readonly string[] | null = null;
 
 /** Built-in default scope when PXPIPE_MODELS is unset: Fable 5 (Claude) plus
- *  GPT 5.6. GPT 5.5 and Opus 4.8 are intentionally off — same pipeline but
+ *  GPT 5.6. GPT 5.5 and Opus 4.6/4.7/4.8 are intentionally off — same pipeline but
  *  measurably worse at reading imaged content (FINDINGS.md 2026-06-16: Opus 4.8
  *  ~2pp arithmetic, 6/15 dense-hex recall vs Fable's 100/100; GPT 5.5 likewise
  *  degrades on imaged history/context) — so silently imaging them is the wrong
- *  default. Both stay opt-in via the dashboard chips or PXPIPE_MODELS. */
+ *  default. All stay opt-in via the dashboard chips or PXPIPE_MODELS. */
 const DEFAULT_MODEL_BASES = ['claude-fable-5', 'gpt-5.6'];
 
 function falsey(v: string): boolean {

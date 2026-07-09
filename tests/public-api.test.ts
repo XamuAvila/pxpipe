@@ -32,12 +32,11 @@ describe('public library API', () => {
   it('recognizes Fable 5 (with suffix aliases) as the default scope; Opus is OFF by default', () => {
     expect(isPxpipeSupportedModel('claude-fable-5')).toBe(true);
     expect(isPxpipeSupportedModel('claude-fable-5-high')).toBe(true);
-    // Opus 4.8 is OPT-IN, not in the default scope — same pipeline/render as
-    // Fable, but it reads imaged content at a tax (FINDINGS.md 2026-06-16), so
+    // Opus 4.6/4.7/4.8 are OPT-IN, not in the default scope — same pipeline/render as
+    // Fable, but they read imaged content at a tax (FINDINGS.md 2026-06-16), so
     // the default doesn't silently compress the operator's main driver. Enable
-    // it via PXPIPE_MODELS or the dashboard "compress models" chips.
+    // them via PXPIPE_MODELS or the dashboard "compress models" chips.
     expect(isPxpipeSupportedModel('claude-opus-4-8')).toBe(false);
-    // older Opus + other families are not in the default scope
     expect(isPxpipeSupportedModel('claude-opus-4-7')).toBe(false);
     expect(isPxpipeSupportedModel('claude-opus-4-6')).toBe(false);
     expect(isPxpipeSupportedModel('claude-mythos-5')).toBe(false);
@@ -52,6 +51,7 @@ describe('public library API', () => {
     expect(isPxpipeSupportedModel('claude-opus-4-8[1m]')).toBe(false); // Opus opt-in, off by default
     // a non-scoped base is still rejected even with a variant tag
     expect(isPxpipeSupportedModel('claude-opus-4-7[1m]')).toBe(false);
+    expect(isPxpipeSupportedModel('claude-opus-4-6[1m]')).toBe(false);
   });
 
   it('honors PXPIPE_MODELS to override the default scope', () => {
@@ -65,6 +65,11 @@ describe('public library API', () => {
       process.env.PXPIPE_MODELS = 'claude-fable-5,claude-opus-4-7';
       expect(isPxpipeSupportedModel('claude-opus-4-7')).toBe(true);
       expect(isPxpipeSupportedModel('claude-opus-4-8')).toBe(false); // not in this set
+      // Opus 4.6 can also be opted in explicitly
+      process.env.PXPIPE_MODELS = 'claude-opus-4-6';
+      expect(isPxpipeSupportedModel('claude-opus-4-6')).toBe(true);
+      expect(isPxpipeSupportedModel('claude-opus-4-6[1m]')).toBe(true);
+      expect(isPxpipeSupportedModel('claude-opus-4-7')).toBe(false);
     } finally {
       if (prev === undefined) delete process.env.PXPIPE_MODELS;
       else process.env.PXPIPE_MODELS = prev;

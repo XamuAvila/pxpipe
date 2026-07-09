@@ -184,7 +184,7 @@ Use with OpenAI-compatible GPT clients:
 // `define`. Under a non-bundled dev runner (tsx) the identifier is not defined;
 // `typeof` returns "undefined" instead of throwing (ECMA-262 §13.5.3), so the
 // guard is safe. `npm_package_version` is only a dev fallback: npm sets it just
-// inside its own run-script env, so for `npx pxpipe-proxy` or a global bin it is
+// inside its own run-script env, so for `npx @xamukavila/pxpipe` or a global bin it is
 // undefined (or reflects the *consumer's* package), never this tool's version.
 declare const __PXPIPE_VERSION__: string | undefined;
 
